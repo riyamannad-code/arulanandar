@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GenAI Chatbot</title>
+</head>
+<body>
+  <h1>GenAI Chatbot</h1>
+
+  <!-- Menu buttons for /chat -->
+  <h2>Menu Options (1–6)</h2>
+  <button onclick="sendChoice('1')">What is GenAI?</button>
+  <button onclick="sendChoice('2')">Applications</button>
+  <button onclick="sendChoice('3')">Advantages</button>
+  <button onclick="sendChoice('4')">Limitations</button>
+  <button onclick="sendChoice('5')">List AI Tools</button>
+  <button onclick="sendChoice('6')">Latest AI Tools</button>
+
+  <h2>Ask Gemini</h2>
+  <input type="text" id="query" placeholder="Type your question here">
+  <button onclick="sendQuery()">Ask</button>
+
+  <h2>Response</h2>
+  <pre id="response"></pre>
+
+  <script>
+    function sendChoice(choice) {
+      fetch("/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ choice: choice })
+      })
+      .then(res => res.json())
+      .then(data => document.getElementById("response").innerText = data.response)
+      .catch(err => console.error(err));
+    }
+
+    function sendQuery() {
+      const query = document.getElementById("query").value;
+      fetch("/ask", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query: query })
+      })
+      .then(res => res.json())
+      .then(data => document.getElementById("response").innerText = data.response)
+      .catch(err => console.error(err));
+    }
+  </script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import google.generativeai as genai
 import os
 
@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return "Hello, Render!"
+    return render_template("index.html")
 
 # Configure Gemini with your API key
 genai.configure(api_key="AIzaSyB5H_bUuwomSkkFS-GgmBuxig3N9kZ8BuY")  # replace with your actual key
