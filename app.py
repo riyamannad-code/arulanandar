@@ -1,8 +1,26 @@
 from flask import Flask, request, jsonify
 import google.generativeai as genai
+import os
 
 # Initialize Flask
 app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Hello, Render!"
+
+@app.route("/ask", methods=["GET", "POST"])
+def ask():
+    if request.method == "POST":
+        # Example: read JSON or form data
+        data = request.get_json(silent=True)
+        question = data.get("question") if data else None
+        return {"answer": f"You asked: {question}"}
+    else:
+        return "Ask endpoint is working!"
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
 
 # Configure Gemini with your API key
 genai.configure(api_key="AIzaSyB5H_bUuwomSkkFS-GgmBuxig3N9kZ8BuY")  # Replace with your actual key
