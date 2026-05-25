@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GenAI Chatbot</title>
+</head>
+<body>
+  <h1>Ask the Chatbot</h1>
+  <input id="query" type="text" placeholder="Type your question">
+  <button onclick="ask()">Ask</button>
+  <pre id="response"></pre>
+
+  <script>
+    function ask() {
+      const query = document.getElementById("query").value;
+      fetch("http://127.0.0.1:5000/ask", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query })
+      })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("response").textContent = data.response;
+      });
+    }
+  </script>
+</body>
+</html>
